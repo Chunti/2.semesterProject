@@ -6,7 +6,6 @@
         <exploded>true</exploded>
         <module>startcode_2sem_2022_frontcontroller</module>
         <packaging>war</packaging>
-        <unpackNestedArchives>false</unpackNestedArchives>
       </options>
     </properties>
     <root id="root">

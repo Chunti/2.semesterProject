@@ -1,4 +1,4 @@
-package dat.startcode.model.services;
+package dat.startcode.model.persistence;
 
 import dat.startcode.model.entities.User;
 import dat.startcode.model.exceptions.DatabaseException;
@@ -15,9 +15,9 @@ public class UserFacade
         return userMapper.login(username, password);
     }
 
-    public static User createUser(String username, String password, String role, ConnectionPool connectionPool) throws DatabaseException
+    public static User createUser(String name, String email, String address, int zipcode, String password,int phone, int role, ConnectionPool connectionPool) throws DatabaseException
     {
         UserMapper userMapper = new UserMapper(connectionPool);
-        return userMapper.createUser(username, password, role);
+        return userMapper.createUser(name, email, address,zipcode,password,phone,role);
     }
 }

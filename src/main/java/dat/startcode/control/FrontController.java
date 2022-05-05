@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package dat.startcode.control;
+/*package dat.startcode.control;
 
 import dat.startcode.model.exceptions.DatabaseException;
 
@@ -64,4 +64,4 @@ public class FrontController extends HttpServlet {
         return "FrontController Servlet";
     }
 
-}
+}*/

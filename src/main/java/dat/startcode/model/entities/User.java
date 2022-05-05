@@ -1,75 +1,51 @@
 package dat.startcode.model.entities;
 
-import java.util.Objects;
 
 public class User
 {
-    private String username;
-    private String password;
-    private String role;
+    private int userId;
+    private String name;
+    private String email;
+    private int role;
+    private int phoneNumber;
 
-    public User(String username, String password, String role)
-    {
-        this.username = username;
-        this.password = password;
+    public User(int userId,String name,String email, int role, int phoneNumber) {
+        this.userId = userId;
+        this.name = name;
+        this.email = email;
         this.role = role;
+        this.phoneNumber = phoneNumber;
     }
 
 
 
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "User{" +
-                "brugerNavn='" + username + '\'' +
-                ", kodeord='" + password + '\'' +
-                ", rolle='" + role + '\'' +
+                "email='" + email + '\'' +
+                ", role='" + role + '\'' +
+                ", phoneNumber=" + phoneNumber +
                 '}';
     }
 
-    public String getUsername()
-    {
-        return username;
+    public int getUserId() {
+        return userId;
     }
 
-    public void setUsername(String username)
-    {
-        this.username = username;
+    public String getName() {
+        return name;
     }
 
-    public String getPassword()
-    {
-        return password;
+    public String getEmail() {
+        return email;
     }
 
-    public void setPassword(String password)
-    {
-        this.password = password;
-    }
-
-    public String getRole()
-    {
+    public int getRole() {
         return role;
     }
 
-    public void setRole(String role)
-    {
-        this.role = role;
+    public int getPhoneNumber() {
+        return phoneNumber;
     }
 
-    @Override
-    public boolean equals(Object o)
-    {
-        if (this == o) return true;
-        if (!(o instanceof User)) return false;
-        User user = (User) o;
-        return getUsername().equals(user.getUsername()) && getPassword().equals(user.getPassword()) &&
-                getRole().equals(user.getRole());
-    }
-
-    @Override
-    public int hashCode()
-    {
-        return Objects.hash(getUsername(), getPassword(), getRole());
-    }
 }

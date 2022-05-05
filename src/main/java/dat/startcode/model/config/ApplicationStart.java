@@ -1,6 +1,7 @@
 package dat.startcode.model.config;
 
 import dat.startcode.model.persistence.ConnectionPool;
+import dat.startcode.model.persistence.UserMapper;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -35,6 +36,7 @@ public class ApplicationStart implements ServletContextListener
         {
             Logger.getLogger("web").log(Level.SEVERE, e.getMessage(), e);
         }
+
     }
 
     public static ConnectionPool getConnectionPool()

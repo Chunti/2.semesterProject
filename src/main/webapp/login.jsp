@@ -17,14 +17,17 @@
 
         <h3>You can log in here</h3>
 
-        <form action="fc/login" method="post">
-            <input type="hidden" name="command" value="login"/>
-            <label for="username">Username: </label>
+        <form action="login" method="post">
+            <label for="username">Email: </label>
             <input type="text" id="username" name="username"/>
             <label for="password">Password: </label>
             <input type="password" id="password" name="password"/>
             <input type="submit"  value="Log in"/>
         </form>
+
+        <br>
+        <br>
+        <p>Not a member? Create an  <a href="createuser.jsp">account</a></p>
 
     </jsp:body>
 </t:pagetemplate>

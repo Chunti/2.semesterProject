@@ -1,4 +1,4 @@
-package dat.startcode.control;
+/*package dat.startcode.control;
 
 import dat.startcode.model.exceptions.DatabaseException;
 
@@ -14,4 +14,4 @@ public class UnknownCommand extends Command {
         throw new DatabaseException( msg );
     }
 
-}
+}*/
