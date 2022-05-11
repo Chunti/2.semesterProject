@@ -10,7 +10,6 @@ import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.KeySpec;
 import java.sql.*;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -19,13 +18,13 @@ public class UserMapper
 {
     ConnectionPool connectionPool;
 
-    public UserMapper(ConnectionPool connectionPool)
+    protected UserMapper(ConnectionPool connectionPool)
     {
         this.connectionPool = connectionPool;
     }
 
 
-    public User login(String email, String password) throws DatabaseException {
+    protected User login(String email, String password) throws DatabaseException {
 
         //createUser("mogens@lykketoft.dk", "Mogens Lykketoft", "MogensErGud","admin");
         Logger.getLogger("web").log(Level.INFO, "");
@@ -83,10 +82,10 @@ public class UserMapper
     }
 
 
-    public User createUser(String name, String email, String address, int zipcode, String password,int phone, int role) throws DatabaseException
+    protected void createUser(String name, String email, String address, int zipcode, String password,int phone, int role) throws DatabaseException
     {
         Logger.getLogger("web").log(Level.INFO, "");
-        User user;
+
         String sql = "insert into `user` ( fullname, email, address, zipcode, phone, role, Hash, Salt) values (?,?,?,?,?,?,?,?)";
 
         SecureRandom random = new SecureRandom();
@@ -117,10 +116,10 @@ public class UserMapper
                 ps.setBytes(7,hash);
                 ps.setBytes(8,salt);
                 int rowsAffected = ps.executeUpdate();
-                int maxRows = ps.getMaxRows();
+
                 if (rowsAffected == 1)
                 {
-                    user = new User(maxRows,name,email, role,phone);
+                    System.out.println("everything went good");
                 } else
                 {
                     throw new DatabaseException("Brugeren med email = " + email + " kunne ikke oprettes i databasen");
@@ -131,17 +130,9 @@ public class UserMapper
         {
             throw new DatabaseException(ex, "Kunne ikke indsætte bruger i databasen");
         }
-        return user;
+        //return user;
     }
-    public static void createUserTest(ConnectionPool connectionPool){
-        UserMapper userMapper = new UserMapper(connectionPool);
-        try {
-            userMapper.createUser("Zack Ottesen","zo@pyra.dk", "Sømoseparken 80", 2750,"Hej",30329013,1);
-        } catch (DatabaseException e) {
-            e.printStackTrace();
-        }
 
-    }
 
     /*public void updateUser(User user){
 

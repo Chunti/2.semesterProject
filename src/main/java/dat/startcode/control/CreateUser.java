@@ -28,6 +28,8 @@ public class CreateUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        //UserFacade.createUserTest(connectionPool);
+
         response.setContentType("text/html");
         String fullName = request.getParameter("name");
         String email = request.getParameter("email");
@@ -41,6 +43,7 @@ public class CreateUser extends HttpServlet {
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
+
         request.getRequestDispatcher("login.jsp").forward(request,response);
 
     }

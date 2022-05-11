@@ -21,7 +21,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container">
             <a class="navbar-brand" href="index.jsp">
-                <img src="${pageContext.request.contextPath}/images/cphbusiness.png" width="400px;" class="img-fluid"/>
+                <img src="${pageContext.request.contextPath}/images/logo.png" width="75px;" class="img-fluid"/>
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
                     aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
@@ -33,19 +33,17 @@
                         <a class="nav-item nav-link">${sessionScope.user.email}</a>
                     </c:if>
                     <c:if test="${sessionScope.user != null }">
-                        <a class="nav-item nav-link" href="${pageContext.request.contextPath}/Bestil">Bestil</a>
+                        <a class="nav-item nav-link" href="${pageContext.request.contextPath}/CarportServlet">Carport</a>
                     </c:if>
                     <c:if test="${sessionScope.user != null }">
-                        <a class="nav-item nav-link" href="${pageContext.request.contextPath}/Order">Ordre</a>
+                        <a class="nav-item nav-link" href="${pageContext.request.contextPath}/OrderServlet">Ordre</a>
                     </c:if>
                     <c:if test="${sessionScope.user.role == 1 }">
                         <a class="nav-item nav-link" href="${pageContext.request.contextPath}/Customer">Kunder</a>
                     </c:if>
 
                     <c:if test="${sessionScope.user != null }">
-                        <a class="navbar-brand" href="${pageContext.request.contextPath}/Basket">
-                            <img src="${pageContext.request.contextPath}/images/basket.png" width="25px;" height="25px;" class="img-fluid"/>
-                        </a>
+                        <a class="navbar-brand" href="${pageContext.request.contextPath}/Basket"></a>
                     </c:if>
 
                     <c:if test="${sessionScope.user == null }">
