@@ -56,5 +56,4 @@ public class ConnectionPool
         Logger.getLogger("web").log(Level.INFO, "Shutting down connection pool");
         ds.close();
     }
-
 }

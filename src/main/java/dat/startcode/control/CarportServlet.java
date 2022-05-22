@@ -4,15 +4,13 @@ import dat.startcode.model.config.ApplicationStart;
 import dat.startcode.model.entities.Carport;
 import dat.startcode.model.entities.Shed;
 import dat.startcode.model.entities.User;
-import dat.startcode.model.exceptions.DatabaseException;
 import dat.startcode.model.persistence.ConnectionPool;
-import dat.startcode.model.persistence.UserFacade;
+import dat.startcode.model.persistence.Facade;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
-import java.util.ArrayList;
 
 @WebServlet(name = "CarportServlet", value = "/CarportServlet")
 public class CarportServlet extends HttpServlet {
@@ -88,7 +86,7 @@ public class CarportServlet extends HttpServlet {
 
         Carport carport = new Carport(length,width,height,"Lækkert træ",userId);
 
-        int orderId = UserFacade.createOrder(carport,shed,user,connectionPool);
+        int orderId = Facade.createOrder(carport,shed,user,connectionPool);
 
         session.setAttribute("orderId", orderId);
 

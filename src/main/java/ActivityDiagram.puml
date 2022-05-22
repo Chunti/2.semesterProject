@@ -1,0 +1,76 @@
+@startuml
+Title Carport
+|Customer|
+start
+:Goes to website;
+|#AntiqueWhite|Website|
+
+:Got a user?;
+
+fork
+
+    :Yes;
+fork again
+
+    :No;
+    :Insert user data;
+    |Database|
+    :Save user data;
+    |Website|
+    end fork
+
+:login;
+|Database|
+:Get user information;
+|Website|
+
+:Select carport values;
+
+|Customer|
+:Accept and ask for an offer;
+|Database|
+:Save all date;
+|Website|
+:Sending request to admin;
+|Shop|
+:Getting request;
+:Call customer;
+:Give an offer;
+
+|Database|
+:Save offer data;
+
+|Customer|
+:Go to website;
+:See offer;
+:Accept offer;
+
+|Website|
+:Give Ordernumber;
+:Generate SVG;
+:Generate item list;
+|Database|
+:Save customer SVG and item list;
+
+fork
+    |Customer|
+    :Get Ordernumber;
+    |Database|
+    :Get SVG and item list;
+    |Website|
+    :Show SVG and item list;
+    |Customer|
+    :Print Userguide, SVG and itemlist;
+
+fork again
+    |Shop|
+    :Get order;
+    :Find all components on itemlist;
+    :Package and deliver it to the customer;
+end fork
+|Customer|
+:Get the delivery;
+:Check the deliver is in check;
+:Start building the Carport;
+stop
+@enduml

@@ -3,9 +3,8 @@ package dat.startcode.control;
 import dat.startcode.model.config.ApplicationStart;
 import dat.startcode.model.entities.User;
 import dat.startcode.model.exceptions.DatabaseException;
-import dat.startcode.model.persistence.UserFacade;
+import dat.startcode.model.persistence.Facade;
 import dat.startcode.model.persistence.ConnectionPool;
-import dat.startcode.model.persistence.UserMapper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -46,7 +45,7 @@ public class Login extends HttpServlet
         String password = request.getParameter("password");
         try
         {
-            user = UserFacade.login(username, password, connectionPool);
+            user = Facade.login(username, password, connectionPool);
             if(user == null){
                 request.setAttribute("errormessage", "Login was invalid, try again with a different email or password.");
                 request.getRequestDispatcher("error.jsp").forward(request,response);

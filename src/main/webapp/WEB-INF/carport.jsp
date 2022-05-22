@@ -36,16 +36,6 @@
             </select>
             <br>
 
-            <label for="height">Carport højde</label>
-            <br>
-            <select name="height" id="height">
-                <c:forEach var="items" begin="0" end="5" varStatus="loop">
-                    <option value="${190+(loop.index*30)}">${190+(loop.index*30)} cm</option>
-                </c:forEach>
-            </select>
-            <br>
-            <br>
-
 
             <fieldset>
                 <legend>Tilkøb et redskabsskur:</legend>
@@ -57,27 +47,15 @@
 
 
 
-            <label for="shedlength">Carport længde</label>
+            <label for="shedlength">Skur længde</label>
             <br>
             <select name="shedlength" id="shedlength">
                 <c:forEach var="items" begin="0" end="18" varStatus="loop">
                     <option value="${150+(loop.index*30)}">${150+(loop.index*30)} cm</option>
                 </c:forEach>
 
-
-            </select>
-            <br>
-
-            <label for="shedwidth">Carport bredde</label>
-            <br>
-            <select name="shedwidth" id="shedwidth">
-                <c:forEach var="items" begin="0" end="17" varStatus="loop">
-                    <option value="${210+(loop.index*30)}">${210+(loop.index*30)} cm</option>
-                </c:forEach>
             </select>
 
-            <br>
-            <br>
 
             <input type="submit" id="button" value="Put i kurv" >
         </form>

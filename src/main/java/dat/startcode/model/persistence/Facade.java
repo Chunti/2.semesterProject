@@ -1,15 +1,13 @@
 package dat.startcode.model.persistence;
 
-import dat.startcode.model.entities.Carport;
-import dat.startcode.model.entities.Order;
-import dat.startcode.model.entities.Shed;
-import dat.startcode.model.entities.User;
+import dat.startcode.model.entities.*;
 import dat.startcode.model.exceptions.DatabaseException;
+import dat.startcode.model.services.BoM;
 
 import java.util.ArrayList;
 
 
-public class UserFacade
+public class Facade
 {
 
     /**UserMapper**/
@@ -36,7 +34,6 @@ public class UserFacade
 
 
 
-
     /**OrderMapper**/
 
     public static int createOrder(Carport carport, Shed shed, User user, ConnectionPool connectionPool){
@@ -47,6 +44,22 @@ public class UserFacade
     public static ArrayList<Order> getOrderDataForAdmin(ConnectionPool connectionPool){
         OrderMapper orderMapper = new OrderMapper(connectionPool);
         return orderMapper.getOrderDataForAdmin();
+    }
+
+
+
+    /**BoMMapper**/
+
+    public static void saveBomData(String bom, ConnectionPool connectionPool){
+        BoMMapper boMMapper = new BoMMapper(connectionPool);
+        boMMapper.saveBomData(bom);
+    }
+
+    public static ArrayList<BoMItems> getBomData(int orderId, int totalLength, int width, ConnectionPool connectionPool){
+        System.out.println("Goddag");
+        BoMMapper boMMapper = new BoMMapper(connectionPool);
+        ArrayList boMItems = boMMapper.getBomData(orderId,totalLength,width,connectionPool);
+        return boMItems;
     }
 
 

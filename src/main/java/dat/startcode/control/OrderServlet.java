@@ -4,7 +4,7 @@ import dat.startcode.model.config.ApplicationStart;
 import dat.startcode.model.entities.Order;
 import dat.startcode.model.entities.User;
 import dat.startcode.model.persistence.ConnectionPool;
-import dat.startcode.model.persistence.UserFacade;
+import dat.startcode.model.persistence.Facade;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -30,8 +30,7 @@ public class OrderServlet extends HttpServlet {
         User user = (User)session.getAttribute("user");
 
         if(user.getRole() == 1){
-            System.out.println("Hej");
-            session.setAttribute("orders", UserFacade.getOrderDataForAdmin(connectionPool));
+            session.setAttribute("orders", Facade.getOrderDataForAdmin(connectionPool));
         }
 
         request.getRequestDispatcher("WEB-INF/order.jsp").forward(request,response);

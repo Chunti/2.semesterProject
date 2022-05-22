@@ -3,8 +3,7 @@ package dat.startcode.control;
 import dat.startcode.model.config.ApplicationStart;
 import dat.startcode.model.exceptions.DatabaseException;
 import dat.startcode.model.persistence.ConnectionPool;
-import dat.startcode.model.persistence.UserFacade;
-import dat.startcode.model.persistence.UserMapper;
+import dat.startcode.model.persistence.Facade;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -39,7 +38,7 @@ public class CreateUser extends HttpServlet {
         String password = request.getParameter("password");
 
         try {
-            UserFacade.createUser(fullName,email,address,zipcode,password,phoneNumber,0,connectionPool);
+            Facade.createUser(fullName,email,address,zipcode,password,phoneNumber,0,connectionPool);
         } catch (DatabaseException e) {
             e.printStackTrace();
         }

@@ -1,0 +1,10 @@
+@startuml
+
+"Carport" "1"--> "1""Shed"
+"Carport" "1"<-- "Order"
+"User" "1"-->"1" "Order"
+"SVG" "1"<-- "Order"
+Order -->"1" Bom
+Bom "1"--* "*"Material
+
+@enduml
