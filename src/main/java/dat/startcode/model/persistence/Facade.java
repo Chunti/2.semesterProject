@@ -46,6 +46,17 @@ public class Facade
         return orderMapper.getOrderDataForAdmin();
     }
 
+    public static int getOrderPrice(int orderId,ConnectionPool connectionPool){
+        OrderMapper orderMapper = new OrderMapper(connectionPool);
+        return orderMapper.getOrderPrice(orderId);
+    }
+
+    public static ArrayList<Order> getOrderDataForUser(User user, ConnectionPool connectionPool){
+        OrderMapper orderMapper = new OrderMapper(connectionPool);
+        return orderMapper.getOrderDataForUser(user);
+
+    }
+
 
 
     /**BoMMapper**/
@@ -61,6 +72,8 @@ public class Facade
         ArrayList boMItems = boMMapper.getBomData(orderId,totalLength,width,connectionPool);
         return boMItems;
     }
+
+
 
 
 

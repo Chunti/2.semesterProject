@@ -9,7 +9,7 @@ public class Order {
     int width;
     String material;
     int shedLength;
-    int shedWidth;
+    int price;
 
     public Order(int orderId, String fullName, int phone, int length, int width, String material) {
         this.orderId = orderId;
@@ -21,9 +21,8 @@ public class Order {
         shedLength = 0;
     }
 
-    public void setShed(int shedLength,int shedWidth) {
+    public void setShed(int shedLength) {
         this.shedLength = shedLength;
-        this.shedWidth = shedWidth;
     }
 
     public int getOrderId() {
@@ -54,8 +53,12 @@ public class Order {
         return shedLength;
     }
 
-    public int getShedWidth() {
-        return shedWidth;
+    public void setPrice(int price){
+        this.price = price;
+    }
+
+    public int getPrice() {
+        return price;
     }
 
     @Override
@@ -68,7 +71,6 @@ public class Order {
                 ", width=" + width +
                 ", material=" + material +
                 ", shedLength=" + shedLength +
-                ", shedWidth=" + shedWidth +
                 '}';
     }
 }

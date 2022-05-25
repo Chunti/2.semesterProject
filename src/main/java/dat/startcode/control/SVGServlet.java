@@ -31,13 +31,8 @@ public class SVGServlet extends HttpServlet {
 
         Order order = (Order) session.getAttribute("editOrder");
 
-
         SVGGenerater svgGenerater = new SVGGenerater(order.getLength(),order.getWidth(), order.getShedLength());
         String svg = svgGenerater.getFullSVG();
-
-        /*BomGenerater bomGenerater = new BomGenerater(order);
-        String bom = bomGenerater.createBoM();
-        Facade.saveBomData(bom,connectionPool);*/
 
         System.out.println("hej");
 

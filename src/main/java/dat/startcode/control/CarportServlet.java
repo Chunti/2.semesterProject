@@ -2,10 +2,12 @@ package dat.startcode.control;
 
 import dat.startcode.model.config.ApplicationStart;
 import dat.startcode.model.entities.Carport;
+import dat.startcode.model.entities.Order;
 import dat.startcode.model.entities.Shed;
 import dat.startcode.model.entities.User;
 import dat.startcode.model.persistence.ConnectionPool;
 import dat.startcode.model.persistence.Facade;
+import dat.startcode.model.services.BomGenerater;
 
 import javax.servlet.*;
 import javax.servlet.http.*;
@@ -27,35 +29,7 @@ public class CarportServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        session = request.getSession();
-
-        /*OrderMapper orderMapper = new OrderMapper(connectionPool);
-        if( (int) session.getAttribute("orderId") == 0){
-            User user = (User) session.getAttribute("user");
-            int orderId = orderMapper.createOrder(user.getUserId());
-            session.setAttribute("orderId", orderId);
-        }
-
-        BottomMapper bottomMapper = new BottomMapper(connectionPool);
-        ToppingMapper toppingMapper = new ToppingMapper(connectionPool);
-        ArrayList<Bottom> bottomArrayList = null;
-        ArrayList<Topping> toppingArrayList = null;
-        try {
-            bottomArrayList = bottomMapper.getBottomData();
-        } catch (DatabaseException e) {
-            e.printStackTrace();
-        }
-
-        try {
-            toppingArrayList = toppingMapper.getToppingData();
-        } catch (DatabaseException e) {
-            e.printStackTrace();
-        }
-        ServletContext servletContext = getServletContext();
-        servletContext.setAttribute("bottoms", bottomArrayList);
-        servletContext.setAttribute("topping", toppingArrayList);
-        System.out.println(bottomArrayList);
-        System.out.println(toppingArrayList);*/
+        //session = request.getSession();
 
         request.getRequestDispatcher("WEB-INF/carport.jsp").forward(request, response);
 
@@ -72,25 +46,33 @@ public class CarportServlet extends HttpServlet {
 
         int length = Integer.parseInt(request.getParameter("length"));
         int width = Integer.parseInt(request.getParameter("width"));
-        int height = Integer.parseInt(request.getParameter("height"));
 
         boolean shedBol = Boolean.parseBoolean(request.getParameter("shed"));
 
         if(shedBol){
             int shedlength = Integer.parseInt(request.getParameter("shedlength"));
-            int shedwidth = Integer.parseInt(request.getParameter("shedwidth"));
 
-            shed = new Shed(shedlength,shedwidth,height,"Andet lækkert træ",userId);
+            shed = new Shed(shedlength,"Andet lækkert træ",userId);
             System.out.println(shed);
         }
 
-        Carport carport = new Carport(length,width,height,"Lækkert træ",userId);
+        Carport carport = new Carport(length,width,"Lækkert træ",userId);
+
+
 
         int orderId = Facade.createOrder(carport,shed,user,connectionPool);
 
+
+        Order order = new Order(orderId, user.getName(),user.getPhoneNumber(),length,width,"Lækkert træ");
+
+        BomGenerater bomGenerater = new BomGenerater(order);
+        String bom = bomGenerater.createBoM();
+        Facade.saveBomData(bom,connectionPool);
+
         session.setAttribute("orderId", orderId);
 
-        System.out.println(carport);
+
+
         request.getRequestDispatcher("WEB-INF/orderrequest.jsp").forward(request, response);
 
 

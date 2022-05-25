@@ -4,14 +4,12 @@ public class Carport {
 
     int length;
     int width;
-    int height;
     String material;
     int userId;
 
-    public Carport(int length, int width, int height, String material, int userId) {
+    public Carport(int length, int width,String material, int userId) {
         this.length = length;
         this.width = width;
-        this.height = height;
         this.material = material;
         this.userId = userId;
     }
@@ -24,9 +22,6 @@ public class Carport {
         return width;
     }
 
-    public int getHeight() {
-        return height;
-    }
 
     public String getMaterial() {
         return material;
@@ -41,7 +36,6 @@ public class Carport {
         return "Carport{" +
                 "length=" + length +
                 ", width=" + width +
-                ", height=" + height +
                 ", material='" + material + '\'' +
                 ", userId=" + userId +
                 '}';

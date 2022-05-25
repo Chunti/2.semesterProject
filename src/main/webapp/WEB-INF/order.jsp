@@ -22,7 +22,7 @@
                         <c:if test="${sessionScope.user.role == 1 }">
                             <h4 class="card-title">Order number: ${item.orderId} <br>Name: ${item.fullName} <br> Phone Number: ${item.phone}</h4>
                             <p class="card-test"> Carport length: ${item.length} Carport width: ${item.width}
-                                <c:if test="${item.shedLength != 0}"><br> Shed length: ${item.shedLength} Shed width ${item.shedWidth}</c:if>
+                                <c:if test="${item.shedLength != 0}"><br> Shed length: ${item.shedLength}</c:if>
                                 <br> Material: ${item.material} </p>
                             <form method="post">
                                 <button type="submit" name="edit" value="${loop.index}">Edit</button>
@@ -30,7 +30,17 @@
                             </form>
                         </c:if>
                         <c:if test="${sessionScope.user.role == 0 }">
-                            <h4 class="card-title">Order number: ${item.orderId} <br>Date: ${item.date} <br> </h4>
+                        <h4 class="card-title">Order number: ${item.orderId}</h4>
+                        <p class="card-test"> Carport length: ${item.length} Carport width: ${item.width}
+                            <c:if test="${item.price != 0 }">
+                            <p class="card-test"> Price: ${item.price}
+                                <br>
+                                <form method="post">
+                                    <button type="submit" name="details" value="${loop.index}">Details</button>
+                                </form>
+
+                            </c:if>
+
                         </c:if>
                     </div>
                 </div>

@@ -62,6 +62,8 @@ public class OrderMapper {
 
         if(shedIncluded == 1) createShedOrder(shed, maxRows);
 
+
+
         return maxRows;
     }
 
@@ -69,15 +71,14 @@ public class OrderMapper {
 
         Logger.getLogger("web").log(Level.INFO, "");
 
-        String sql = "insert into shed (orderId, length, width, material) values(?,?,?,?)";
+        String sql = "insert into shed (orderId, length, material) values(?,?,?)";
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
                 ps.setInt(1, maxRows);
                 ps.setInt(2, shed.getLength());
-                ps.setInt(3, shed.getWidth());
-                ps.setString(4, shed.getMaterial());
+                ps.setString(3, shed.getMaterial());
 
                 int rowsAffected = ps.executeUpdate();
                 if(rowsAffected == 1){
@@ -102,13 +103,12 @@ public class OrderMapper {
         int width;
         String mat;
         int shedLength;
-        int shedWidth;
 
         int counter = 0;
 
         Logger.getLogger("web").log(Level.INFO, "");
 
-        String sql = "SELECT carport.order.orderId,carport.user.fullname, carport.user.phone, carport.order.length, carport.order.width, carport.order.material, carport.shed.length AS shedLength, carport.shed.width AS shedWidth from carport.order " +
+        String sql = "SELECT carport.order.orderId,carport.user.fullname, carport.user.phone, carport.order.length, carport.order.width, carport.order.material, carport.shed.length AS shedLength from carport.order " +
                 "left join carport.shed on carport.order.orderId = carport.shed.orderId " +
                 "inner join carport.user on carport.order.userId =  carport.user.userId ";
 
@@ -128,8 +128,7 @@ public class OrderMapper {
 
                     if(rs.getInt("shedLength") != 0){
                         shedLength = rs.getInt("shedLength");
-                        shedWidth = rs.getInt("shedWidth");
-                        orders.get(counter).setShed(shedLength,shedWidth);
+                        orders.get(counter).setShed(shedLength);
                     }
                     counter++;
                 }
@@ -138,6 +137,74 @@ public class OrderMapper {
             e.printStackTrace();
         }
         return orders;
+    }
+
+    protected ArrayList<Order> getOrderDataForUser(User user) {
+        ArrayList<Order> orders = new ArrayList<>();
+
+        int orderId;
+        int length;
+        int width;
+        String mat;
+        int shedLength;
+
+        int counter = 0;
+
+        Logger.getLogger("web").log(Level.INFO, "");
+
+        String sql = "SELECT carport.order.orderId, carport.order.length, carport.order.width, carport.order.material, carport.shed.length AS shedLength, carport.order.price from carport.order " +
+                "left join carport.shed on carport.order.orderId = carport.shed.orderId " +
+                "inner join carport.user on carport.order.userId =  carport.user.userId where `order`.userId = ?;";
+
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setInt(1,user.getUserId());
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    orderId = rs.getInt("orderId");
+                    length = rs.getInt("length");
+                    width = rs.getInt("width");
+                    mat = rs.getString("material");
+
+
+                    orders.add(new Order(orderId,user.getName(),user.getPhoneNumber(),length,width,mat));
+
+                    orders.get(counter).setPrice(rs.getInt("price"));
+                    if(rs.getInt("shedLength") != 0){
+                        shedLength = rs.getInt("shedLength");
+                        orders.get(counter).setShed(shedLength);
+                    }
+                    counter++;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return orders;
+    }
+
+
+
+
+
+    protected int getOrderPrice(int orderId){
+
+        int price = 0;
+
+        String sql = "SELECT SUM(bom.amount*material.price) AS 'price' from bom inner join material on material.itemId = bom.itemId where bom.orderId = ?;";
+
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setInt(1,orderId);
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    price = rs.getInt("price");
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return price;
     }
 
     /*protected Order getOrderFromOrderId(int orderId){
