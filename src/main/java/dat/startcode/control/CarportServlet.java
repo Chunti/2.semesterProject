@@ -53,17 +53,18 @@ public class CarportServlet extends HttpServlet {
             int shedlength = Integer.parseInt(request.getParameter("shedlength"));
 
             shed = new Shed(shedlength,"Andet lækkert træ",userId);
-            System.out.println(shed);
         }
 
         Carport carport = new Carport(length,width,"Lækkert træ",userId);
-
-
 
         int orderId = Facade.createOrder(carport,shed,user,connectionPool);
 
 
         Order order = new Order(orderId, user.getName(),user.getPhoneNumber(),length,width,"Lækkert træ");
+
+        if(shedBol){
+            order.setShed(shed.getLength());
+        }
 
         BomGenerater bomGenerater = new BomGenerater(order);
         String bom = bomGenerater.createBoM();

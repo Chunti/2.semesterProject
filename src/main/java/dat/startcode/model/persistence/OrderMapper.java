@@ -14,13 +14,12 @@ import java.util.logging.Logger;
 public class OrderMapper {
     ConnectionPool connectionPool;
 
-    protected OrderMapper(ConnectionPool connectionPool)
-    {
+    protected OrderMapper(ConnectionPool connectionPool) {
         this.connectionPool = connectionPool;
     }
 
 
-    protected int createOrder(Carport carport, Shed shed, User user){
+    protected int createOrder(Carport carport, Shed shed, User user) {
 
         Logger.getLogger("web").log(Level.INFO, "");
 
@@ -35,22 +34,20 @@ public class OrderMapper {
             try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
                 ps.setInt(1, carport.getLength());
                 ps.setInt(2, carport.getWidth());
-                ps.setString(3,carport.getMaterial());
-                ps.setInt(4,user.getUserId());
-                ps.setInt(5,shedIncluded);
+                ps.setString(3, carport.getMaterial());
+                ps.setInt(4, user.getUserId());
+                ps.setInt(5, shedIncluded);
                 int rowsAffected = ps.executeUpdate();
-                if(rowsAffected == 1){
+                if (rowsAffected == 1) {
                     System.out.println("Carport data is saved");
-                }
-                else{
+                } else {
                     throw new DatabaseException("Could not save Carport data");
                 }
 
                 try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         maxRows = (int) generatedKeys.getLong(1);
-                    }
-                    else {
+                    } else {
                         throw new SQLException("Creating user failed, no ID obtained.");
                     }
                 }
@@ -60,8 +57,7 @@ public class OrderMapper {
             throwables.printStackTrace();
         }
 
-        if(shedIncluded == 1) createShedOrder(shed, maxRows);
-
+        if (shedIncluded == 1) createShedOrder(shed, maxRows);
 
 
         return maxRows;
@@ -81,10 +77,9 @@ public class OrderMapper {
                 ps.setString(3, shed.getMaterial());
 
                 int rowsAffected = ps.executeUpdate();
-                if(rowsAffected == 1){
+                if (rowsAffected == 1) {
                     System.out.println("Shed data is saved");
-                }
-                else{
+                } else {
                     throw new DatabaseException("Could not save shed data");
                 }
             }
@@ -124,9 +119,9 @@ public class OrderMapper {
                     mat = rs.getString("material");
 
 
-                    orders.add(new Order(orderId,fullname,phone,length,width,mat));
+                    orders.add(new Order(orderId, fullname, phone, length, width, mat));
 
-                    if(rs.getInt("shedLength") != 0){
+                    if (rs.getInt("shedLength") != 0) {
                         shedLength = rs.getInt("shedLength");
                         orders.get(counter).setShed(shedLength);
                     }
@@ -158,7 +153,7 @@ public class OrderMapper {
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
-                ps.setInt(1,user.getUserId());
+                ps.setInt(1, user.getUserId());
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     orderId = rs.getInt("orderId");
@@ -167,10 +162,10 @@ public class OrderMapper {
                     mat = rs.getString("material");
 
 
-                    orders.add(new Order(orderId,user.getName(),user.getPhoneNumber(),length,width,mat));
+                    orders.add(new Order(orderId, user.getName(), user.getPhoneNumber(), length, width, mat));
 
                     orders.get(counter).setPrice(rs.getInt("price"));
-                    if(rs.getInt("shedLength") != 0){
+                    if (rs.getInt("shedLength") != 0) {
                         shedLength = rs.getInt("shedLength");
                         orders.get(counter).setShed(shedLength);
                     }
@@ -183,11 +178,7 @@ public class OrderMapper {
         return orders;
     }
 
-
-
-
-
-    protected int getOrderPrice(int orderId){
+    protected int getOrderPrice(int orderId) {
 
         int price = 0;
 
@@ -195,7 +186,7 @@ public class OrderMapper {
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
-                ps.setInt(1,orderId);
+                ps.setInt(1, orderId);
                 ResultSet rs = ps.executeQuery();
                 while (rs.next()) {
                     price = rs.getInt("price");
@@ -207,42 +198,62 @@ public class OrderMapper {
         return price;
     }
 
-    /*protected Order getOrderFromOrderId(int orderId){
-
+    protected void updatePrice(int orderId, int price) {
         Logger.getLogger("web").log(Level.INFO, "");
 
-        String sql = "SELECT carport.order.orderId,carport.user.fullname, carport.user.phone , carport.order.length, carport.order.width, carport.order.material, carport.shed.length AS shedLength, carport.shed.width AS shedWidth from carport.order " +
-                "left join carport.shed on carport.order.orderId = carport.shed.orderId " +
-                "inner join carport.user on carport.order.userId =  carport.user.userId " +
-                "where carport.order.orderId = ?";
+        String sql = "update carport.`order` set carport.`order`.price = ? where carport.`order`.orderId = ?;";
 
         try (Connection connection = connectionPool.getConnection()) {
-            try (PreparedStatement ps = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
 
-                ps.setString(1, String.valueOf(userId));
-                ps.setString(2, String.valueOf(today));
+                ps.setInt(1, price);
+                ps.setInt(2, orderId);
 
-                int rowsAffexted = ps.executeUpdate();
-                if (rowsAffexted == 1) {
-                    result = true;
+                int rowsAffected = ps.executeUpdate();
+                if (rowsAffected == 1) {
+                    System.out.println("Price data is saved");
                 } else {
-                    throw new DatabaseException("Kunne ikke insaette ordre");
+                    throw new DatabaseException("Could not save Price data");
                 }
-                ResultSet idResultset = ps.getGeneratedKeys();
-                if (idResultset.next()) {
-                    newId = idResultset.getInt(1);
-
-                }
-            } catch (DatabaseException e) {
-                e.printStackTrace();
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | DatabaseException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    protected void deleteOrder(int orderId) {
+        Logger.getLogger("web").log(Level.INFO, "");
+
+        String sqlFK = "SET FOREIGN_KEY_CHECKS=0;";
+
+
+        String sql = "delete carport.order.*, carport.bom.*, carport.shed.* from carport.order " +
+                "left join carport.bom on carport.order.orderId = carport.bom.orderId " +
+                "left join carport.shed on carport.order.orderId = carport.shed.orderId " +
+                "where carport.order.orderId = ?;";
+
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement ps = connection.prepareStatement(sqlFK)) {
+                ps.executeUpdate();
+            } catch (SQLException sqlException) {
+                sqlException.printStackTrace();
+            }
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
 
-
-    }*/
-
-
-
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setInt(1, orderId);
+                int rowsAffected = ps.executeUpdate();
+                if (rowsAffected > 0) {
+                    System.out.println("delete data success");
+                } else {
+                    throw new DatabaseException("delete data didn't work");
+                }
+            }
+        } catch (SQLException | DatabaseException e) {
+            e.printStackTrace();
+        }
+    }
 }

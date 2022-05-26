@@ -54,7 +54,16 @@ public class Facade
     public static ArrayList<Order> getOrderDataForUser(User user, ConnectionPool connectionPool){
         OrderMapper orderMapper = new OrderMapper(connectionPool);
         return orderMapper.getOrderDataForUser(user);
+    }
 
+    public static void updatePrice(int orderId, int price, ConnectionPool connectionPool){
+        OrderMapper orderMapper = new OrderMapper(connectionPool);
+        orderMapper.updatePrice(orderId,price);
+    }
+
+    public static void deleteOrder(int orderId, ConnectionPool connectionPool){
+        OrderMapper orderMapper = new OrderMapper(connectionPool);
+        orderMapper.deleteOrder(orderId);
     }
 
 

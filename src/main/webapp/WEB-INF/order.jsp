@@ -24,8 +24,11 @@
                             <p class="card-test"> Carport length: ${item.length} Carport width: ${item.width}
                                 <c:if test="${item.shedLength != 0}"><br> Shed length: ${item.shedLength}</c:if>
                                 <br> Material: ${item.material} </p>
-                            <form method="post">
+
+                            <form action="${pageContext.request.contextPath}/EditServlet">
                                 <button type="submit" name="edit" value="${loop.index}">Edit</button>
+                            </form>
+                            <form method="post">
                                 <button type="submit" name="delete" value="${item.orderId}">Delete</button>
                             </form>
                         </c:if>

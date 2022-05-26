@@ -30,9 +30,7 @@ public class OrderServlet extends HttpServlet {
         HttpSession session = request.getSession();
         User user = (User)session.getAttribute("user");
 
-        if(user.getRole() == 1){
-            session.setAttribute("orders", Facade.getOrderDataForAdmin(connectionPool));
-        }
+        if(user.getRole() == 1) session.setAttribute("orders", Facade.getOrderDataForAdmin(connectionPool));
         else session.setAttribute("orders", Facade.getOrderDataForUser(user, connectionPool));
 
         request.getRequestDispatcher("WEB-INF/order.jsp").forward(request,response);
@@ -42,33 +40,25 @@ public class OrderServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+        HttpSession session = request.getSession();
         String delete = request.getParameter("delete");
-        String edit = request.getParameter("edit");
         String details = request.getParameter("details");
 
         if(delete != null){
-            System.out.println("delete" + delete);
+            int orderId = Integer.parseInt(delete);
+            Facade.deleteOrder(orderId, connectionPool);
+            System.out.println(delete);
         }
-        else if (edit != null){
-            int editNum = Integer.parseInt(edit);
-            HttpSession session = request.getSession();
+
+        else if(details != null){
+
+            int detailsNum = Integer.parseInt(details);
             ArrayList<Order> orders = (ArrayList<Order>) session.getAttribute("orders");
-            System.out.println(editNum);
-            session.setAttribute("editOrder", orders.get(editNum));
-
-            int price = Facade.getOrderPrice(orders.get(editNum).getOrderId(),connectionPool);
-            session.setAttribute("price",price);
-
-            int offerPrice = (int) (Math.ceil(((price * 1.3)/100)))*100;
-            session.setAttribute("offerPrice",offerPrice);
-
+            System.out.println(detailsNum);
+            System.out.println(orders.get(detailsNum));
+            session.setAttribute("editOrder", orders.get(detailsNum));
             request.getRequestDispatcher("WEB-INF/edit.jsp").forward(request,response);
         }
-        else if(details != null){
-            request.getRequestDispatcher("WEB-INF/svgpage.jsp").forward(request,response);
-        }
-
-
 
         doGet(request,response);
     }

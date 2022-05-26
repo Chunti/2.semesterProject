@@ -29,8 +29,12 @@
             </div>
         </div>
 
-        <input id="number" type="number" name="number" value="${sessionScope.offerPrice}" min="${sessionScope.price}">
-        <button type="submit" name="ok" value="1">Give offer</button>
+        <c:if test="${sessionScope.user.role == 1 }">
+            <form method="post">
+                <input id="number" type="number" name="number" value="${sessionScope.offerPrice}" min="${sessionScope.price}">
+                <button type="submit" name="offer" value="1">Give offer</button>
+            </form>
+        </c:if>
 
     </jsp:body>
 
