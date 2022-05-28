@@ -67,7 +67,7 @@ public class CarportMath {
         return plank;
     }
 
-    public static int[] getLooseWood(int length){
+    public static int[] getLooseWood(int length,int multiplyer){
         int looseWood[] = new int[2];
         looseWood[0]  = 1;
 
@@ -78,10 +78,11 @@ public class CarportMath {
         looseWood[0] = looseWood[0]*2;
 
         if(length>240){
-            looseWood[1] = (int) Math.ceil((length-240) /30.0)*30+240;
+            //looseWood[1] = (int) (Math.ceil((length-240) /30.0)*30+240)-30;
+            looseWood[1] = 270;
         }
         else looseWood[1] = 240;
-
+        looseWood[0] = looseWood[0]*multiplyer;
 
         return looseWood;
     }

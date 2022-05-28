@@ -25,8 +25,6 @@ public class UserMapper
 
 
     protected User login(String email, String password) throws DatabaseException {
-
-        //createUser("mogens@lykketoft.dk", "Mogens Lykketoft", "MogensErGud","admin");
         Logger.getLogger("web").log(Level.INFO, "");
 
         User user = null;
@@ -48,7 +46,6 @@ public class UserMapper
                 ResultSet rs = ps.executeQuery();
 
                 if (rs.next()) {
-                    System.out.println("ello");
                     userId = rs.getInt("userId");
                     hash = rs.getBytes("Hash");
                     salt = rs.getBytes("Salt");
@@ -65,10 +62,8 @@ public class UserMapper
                 byte[] userPassword = factory1.generateSecret(check).getEncoded();
                 if(Arrays.equals(hash,userPassword)){
                     user = new User(userId,name,email,role,phone);
-                    System.out.println("Hej det er faktisk rigtigt password");
                 }
                 else{
-                    System.out.println("Wrong Password");
                     return null;
                 }
             } catch (NoSuchAlgorithmException | InvalidKeySpecException e) {

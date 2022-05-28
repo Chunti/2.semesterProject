@@ -1,0 +1,31 @@
+@startuml
+participant Actor
+
+
+
+Actor -> Login : doPost
+activate Login
+Login -> Facade : login
+activate Facade
+create UserMapper
+Facade -> UserMapper : new
+activate UserMapper
+UserMapper --> Facade
+deactivate UserMapper
+Facade -> UserMapper : login
+activate UserMapper
+database Database
+UserMapper -> Database : Getting for user data \n  and password
+Database --> UserMapper
+deactivate Database
+create User
+UserMapper -> User : new
+activate User
+User --> UserMapper
+deactivate User
+UserMapper --> Facade
+deactivate UserMapper
+Facade --> Login
+deactivate Facade
+return
+@enduml

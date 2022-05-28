@@ -33,18 +33,18 @@ fork again
 |Database|
 :Save all date;
 
+|Shop|
+:Getting request;
+:Set the requested data into another program;
+
 |Website|
-:Generate item list (Don't show);
-:Generate SVG (Don't show);
+:Generate item list;
+:Generate SVG;
 
 |Database|
 :Save BoM data;
 
-|Website|
-:Sending request to admin;
-
 |Shop|
-:Getting request;
 :Call customer;
 :Give an offer;
 

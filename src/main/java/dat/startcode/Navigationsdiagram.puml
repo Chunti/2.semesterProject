@@ -1,0 +1,40 @@
+@startuml
+
+state index.jsp
+state login.jsp
+state createuser.jsp
+state error.jsp
+state carport.jsp
+state customer.jsp
+state order.jsp
+state orderrequest.jsp
+state svgpage.jsp
+
+
+[*] -> index.jsp
+login.jsp --> index.jsp
+login.jsp --> createuser.jsp
+login.jsp --> error.jsp
+
+
+
+
+index.jsp --> carport.jsp: CarportServlet (User)
+index.jsp --> order.jsp: OrderServlet (User)
+index.jsp --> customer.jsp: CustomerServlet (Only admin)
+
+order.jsp --> edit.jsp: Changes \n depending  on role
+order.jsp --> order.jsp: delete
+
+carport.jsp --> index.jsp
+customer.jsp --> index.jsp
+order.jsp --> index.jsp
+
+
+edit.jsp --> svgpage.jsp
+
+carport.jsp --> orderrequest.jsp: CarportServlet (User)
+
+
+
+@enduml

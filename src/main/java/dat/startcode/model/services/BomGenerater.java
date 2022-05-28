@@ -81,8 +81,8 @@ public class BomGenerater {
 
     private void applyLooseWood(){
 
-        int[] looseWoodLength = CarportMath.getLooseWood(shedLength);
-        int[] looseWoodWidth = CarportMath.getLooseWood(width);
+        int[] looseWoodLength = CarportMath.getLooseWood(shedLength,2);
+        int[] looseWoodWidth = CarportMath.getLooseWood(width,3);
 
         if(looseWoodLength[1] == 240) bom.addInsert(7,looseWoodLength[0]);
         else bom.addInsert(6,looseWoodLength[0]);
