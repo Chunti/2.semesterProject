@@ -38,13 +38,6 @@
                     <c:if test="${sessionScope.user != null }">
                         <a class="nav-item nav-link" href="${pageContext.request.contextPath}/OrderServlet">Ordre</a>
                     </c:if>
-                    <c:if test="${sessionScope.user.role == 1 }">
-                        <a class="nav-item nav-link" href="${pageContext.request.contextPath}/Customer">Kunder</a>
-                    </c:if>
-
-                    <c:if test="${sessionScope.user != null }">
-                        <a class="navbar-brand" href="${pageContext.request.contextPath}/Basket"></a>
-                    </c:if>
 
                     <c:if test="${sessionScope.user == null }">
                         <a class="nav-item nav-link" href="${pageContext.request.contextPath}/login.jsp">Login</a>
@@ -68,16 +61,15 @@
     <hr/>
     <div class="row mt-4">
         <div class="col">
-            Nørgaardsvej 30<br/>
+            Firskovvej 20<br/>
             2800 Lyngby
         </div>
         <div class="col">
             <jsp:invoke fragment="footer"/><br/>
-            <p>&copy; 2022 Cphbusiness</p>
         </div>
         <div class="col">
-            Datamatikeruddannelsen<br/>
-            2. semester forår 2022
+            Johannes Fog A/S<br/>
+            CVR-nr. 16314439
         </div>
     </div>
 

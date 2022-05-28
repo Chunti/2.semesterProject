@@ -5,11 +5,11 @@
 
 <t:pagetemplate>
     <jsp:attribute name="header">
-         Welcome to the frontpage
+        Din stykliste:
     </jsp:attribute>
 
     <jsp:attribute name="footer">
-        Welcome to the frontpage
+        Stykliste og tegning
     </jsp:attribute>
 
     <jsp:body>
@@ -33,8 +33,6 @@
                 </tr>
 
             </c:forEach>
-
-
 
         </table>
 

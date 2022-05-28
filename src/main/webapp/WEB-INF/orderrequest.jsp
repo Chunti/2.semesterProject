@@ -6,17 +6,17 @@
 
 <t:pagetemplate>
     <jsp:attribute name="header">
-             About
+            Order bestilt
     </jsp:attribute>
 
     <jsp:attribute name="footer">
-            About
+            Order bestilt
     </jsp:attribute>
 
     <jsp:body>
 
-        <p>You have requested to buy a carport. Your orderID is : ${sessionScope.orderId}<br>
-            One from our sales department will call you as soon a posible.</p>
+        <p>Du har nu bestilt en carport. Dit orderID er : ${sessionScope.orderId}<br>
+            En fra vores salgspersonnale vil kontakte dig hutigst muligt.</p>
 
     </jsp:body>
 </t:pagetemplate>
